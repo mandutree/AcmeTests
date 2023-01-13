@@ -3,7 +3,6 @@ package com.applitools.demo;
 import com.appium.driver.capability.ChromeOptionsBuilder;
 import com.appium.driver.factory.ChromeDriverFactory;
 import com.appium.driver.factory.DriverFactory;
-import com.applitools.demo.page.common.PageType;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
@@ -19,6 +18,7 @@ public class WebTest {
 
     @BeforeClass
     public void setup_webTest_beforeClass() {
+        ChromeDriverFactory.SETUP = true;
         // Determine which device we're testing on from System Properties
         String type = System.getProperty("clientType");
         if (type == null || StringUtils.isEmpty(type) || type == "chrome") {
@@ -35,7 +35,7 @@ public class WebTest {
             // Construct the WebDriver factory
             this.driverFactory = ChromeDriverFactory.getInstance().withCapabilityBuilder(optionsBuilder);
             this.driver = driverFactory.create();
-            this.catalog = new AcmeCatalog(driver, PageType.WEB);
+            this.catalog = new AcmeCatalog(driver, ClientType.WEB);
         } else {
             throw new RuntimeException("This demo does not currently support other client types");
         }
